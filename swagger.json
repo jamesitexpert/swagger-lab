@@ -1,0 +1,120 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Node API 文檔",
+      "version": "1.0.0",
+      "description": "一個示例 API 文檔"
+    },
+    "components": {
+      "schemas": {
+        "Todo": {
+          "type": "object",
+          "required": [
+            "title"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The auto-generated id of the todo."
+            },
+            "title": {
+              "type": "string",
+              "description": "The title of the todo."
+            }
+          },
+          "example": {
+            "id": 1,
+            "title": "Buy groceries"
+          }
+        }
+      }
+    },
+    "paths": {
+      "/": {
+        "get": {
+          "summary": "根目錄歡迎頁面",
+          "responses": {
+            "200": {
+              "description": "歡迎訊息",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/health": {
+        "get": {
+          "summary": "健康檢查和運行時間",
+          "responses": {
+            "200": {
+              "description": "健康檢查資訊",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "uptime": {
+                        "type": "number",
+                        "description": "The uptime of the server in seconds."
+                      },
+                      "message": {
+                        "type": "string",
+                        "description": "OK"
+                      },
+                      "timestamp": {
+                        "type": "number",
+                        "description": "The current time in milliseconds."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/todos": {
+        "get": {
+          "summary": "獲取所有待辦事項",
+          "responses": {
+            "200": {
+              "description": "待辦事項列表",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Todo"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/todos/{id}": {
+        "get": {
+          "summary": "獲取特定待辦事項",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer",
+                "required": true
+              },
+              "description": "The todo id"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "特定待辦事項",
+              "content": {
+                "application/json": {
+                  "schema": {
